@@ -31,4 +31,4 @@ public:
     void setPositionY(int positionY);
 };
 
-#endif // CAR_H
+#endif
