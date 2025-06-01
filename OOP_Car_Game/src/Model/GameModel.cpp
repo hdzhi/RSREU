@@ -1,15 +1,18 @@
 #include "Model/GameModel.h"
 #include <ctime>
-#include <algorithm>    // Добавляем для std::remove_if
-#include "Model/Road.h" // Убедитесь, что этот файл существует и содержит getWidth()
+#include <algorithm>
+#include "Model/Road.h"
 
 GameModel::GameModel(int width, int height)
-    : m_car(width / 2 - 25, height - 100, 50, 80, FL_RED),
+    : m_car(width, height - 150, 50, 80, FL_RED),
       m_road(width, height),
       m_score(0),
       m_highScore(0),
       m_gameOver(false),
-      m_lastObstacleTime(time(nullptr)) {}
+      m_lastObstacleTime(time(nullptr))
+{
+    m_car.setPositionX(width / 2 - 25);
+}
 
 void GameModel::update()
 {
@@ -18,40 +21,30 @@ void GameModel::update()
 
     m_road.update();
 
-    // Добавление новых препятствий
-    time_t currentTime = time(nullptr);
-    if (currentTime - m_lastObstacleTime > 1)
+    if (time(nullptr) - m_lastObstacleTime > 0.3)
     {
         int lane = rand() % 3;
-        m_obstacles.emplace_back(lane, m_road.getHeight());
-        m_lastObstacleTime = currentTime;
+        m_obstacles.emplace_back(lane, m_road.getWidth());
+        m_lastObstacleTime = time(nullptr);
     }
 
-    // Обновление препятствий
     for (auto &obstacle : m_obstacles)
     {
         obstacle.update();
-
-        // Проверка столкновений
         if (obstacle.checkCollision(m_car))
         {
             m_gameOver = true;
-            if (m_score > m_highScore)
-            {
-                m_highScore = m_score;
-            }
+            m_highScore = std::max(m_score, m_highScore);
             return;
         }
     }
 
-    // Удаление препятствий за пределами экрана
     m_obstacles.erase(
         std::remove_if(m_obstacles.begin(), m_obstacles.end(),
                        [](const Obstacle &o)
                        { return o.isOutOfScreen(); }),
         m_obstacles.end());
 
-    // Увеличение счета
     m_score++;
 }
 
