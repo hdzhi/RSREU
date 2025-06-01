@@ -24,4 +24,4 @@ public:
     static void exitCallback(Fl_Widget *widget, void *data);
 };
 
-#endif // MAIN_MENU_VIEW_H
+#endif
