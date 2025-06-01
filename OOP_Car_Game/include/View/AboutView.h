@@ -21,4 +21,4 @@ public:
     static void backCallback(Fl_Widget *widget, void *data);
 };
 
-#endif // ABOUT_VIEW_H
+#endif
