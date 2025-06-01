@@ -27,4 +27,4 @@ public:
     GameView &getView();
 };
 
-#endif // GAME_CONTROLLER_H
+#endif
