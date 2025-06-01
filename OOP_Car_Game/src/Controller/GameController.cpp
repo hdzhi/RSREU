@@ -14,7 +14,7 @@ void GameController::startGame()
     m_model.reset();
     m_view.show();
     m_view.hideGameOver();
-    Fl::add_timeout(0.016, timerCallback, this); // ~60 FPS
+    Fl::add_timeout(0.016, timerCallback, this);
 }
 
 void GameController::backToMenu()
@@ -35,11 +35,11 @@ void GameController::handleKeyPress(int key)
         m_model.moveCarRight();
         break;
     }
+    m_view.redraw();
 }
 
 void GameController::drawGame() const
 {
-    // Отрисовка игры
     m_model.getRoad().draw();
 
     for (const auto &obstacle : m_model.getObstacles())
