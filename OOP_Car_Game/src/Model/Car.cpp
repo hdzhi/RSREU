@@ -9,7 +9,7 @@ void Car::moveLeft()
     if (m_currentLane > 0)
     {
         m_currentLane--;
-        m_positionX -= 100; // Ширина полосы
+        m_positionX = 150 + m_currentLane * 200;
     }
 }
 
@@ -18,21 +18,18 @@ void Car::moveRight()
     if (m_currentLane < 2)
     {
         m_currentLane++;
-        m_positionX += 100; // Ширина полосы
+        m_positionX = 150 + m_currentLane * 200;
     }
 }
 
 void Car::draw() const
 {
-    // Кузов машины
     fl_color(m_color);
     fl_rectf(m_positionX, m_positionY, m_width, m_height);
 
-    // Окна машины
     fl_color(FL_CYAN);
     fl_rectf(m_positionX + 5, m_positionY + 5, m_width - 10, m_height / 3);
 
-    // Фары
     fl_color(FL_YELLOW);
     fl_rectf(m_positionX, m_positionY + m_height / 3, 5, 5);
     fl_rectf(m_positionX + m_width - 5, m_positionY + m_height / 3, 5, 5);
