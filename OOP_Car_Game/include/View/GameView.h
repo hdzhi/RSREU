@@ -27,6 +27,7 @@ public:
     void hideGameOver();
 
     static void backToMenuCallback(Fl_Widget *widget, void *data);
+    int handle(int event) override;
 };
 
-#endif // GAME_VIEW_H
+#endif
