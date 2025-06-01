@@ -6,7 +6,6 @@ AboutView::AboutView(int width, int height, const char *title, AboutController *
 {
     begin();
 
-    // Красивый фон
     box(FL_FLAT_BOX);
     color(fl_rgb_color(30, 30, 40));
 
@@ -20,8 +19,7 @@ AboutView::AboutView(int width, int height, const char *title, AboutController *
         "RACING GAME\n\n"
         "Avoid obstacles by switching lanes.\n"
         "Use LEFT and RIGHT arrow keys to move.\n\n"
-        "Created with FLTK library\n"
-        "OOP Course Project";
+        "Created with FLTK library\n";
 
     m_pInfoBox = new Fl_Box(50, 150, width - 100, 200, infoText);
     m_pInfoBox->labelfont(FL_BOLD);
