@@ -13,6 +13,8 @@ private:
     Car m_car;
     Road m_road;
     std::vector<Obstacle> m_obstacles;
+    int m_obstacleWaveCount;
+    double m_nextWaveTime;
     int m_score;
     int m_highScore;
     bool m_gameOver;
@@ -36,4 +38,4 @@ public:
     const std::vector<Obstacle> &getObstacles() const;
 };
 
-#endif // GAME_MODEL_H
+#endif
