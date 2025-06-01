@@ -5,8 +5,14 @@
 #include <FL/fl_draw.H>
 #include <cstdlib>
 
-// Предварительное объявление класса Car, чтобы избежать циклических зависимостей
 class Car;
+
+enum class ObstacleType
+{
+    CAR,
+    TRUCK,
+    CONE
+};
 
 class Obstacle
 {
@@ -24,7 +30,7 @@ public:
 
     void update();
     void draw() const;
-    bool checkCollision(const Car &car) const; // Изменено с const int& на const Car&
+    bool checkCollision(const Car &car) const;
     bool isOutOfScreen() const;
 
     int getPositionX() const;
@@ -33,4 +39,4 @@ public:
     int getHeight() const;
 };
 
-#endif // OBSTACLE_H
+#endif
