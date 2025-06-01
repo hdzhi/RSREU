@@ -7,7 +7,6 @@ MainMenuView::MainMenuView(int width, int height, const char *title, MainMenuCon
 {
     begin();
 
-    // Красивый фон
     box(FL_FLAT_BOX);
     color(fl_rgb_color(30, 30, 40));
 
