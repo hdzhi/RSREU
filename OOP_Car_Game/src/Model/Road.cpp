@@ -17,14 +17,18 @@ void Road::update()
 
 void Road::draw() const
 {
-    // Дорога
     fl_color(FL_BLACK);
     fl_rectf(0, 0, m_width, m_height);
 
-    // Разметка полос
     fl_color(FL_YELLOW);
     for (int lane : m_laneMarkers)
     {
         fl_line(lane, 0, lane, m_height);
+    }
+
+    fl_color(FL_WHITE);
+    for (int y = m_roadMarkY; y < m_height; y += 40)
+    {
+        fl_rectf(m_width / 2 - 25, y, 50, 20);
     }
 }
