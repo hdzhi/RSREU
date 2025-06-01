@@ -23,4 +23,4 @@ public:
     int getHeight() const { return m_height; }
 };
 
-#endif // ROAD_H
+#endif
