@@ -73,3 +73,13 @@ void GameView::backToMenuCallback(Fl_Widget *widget, void *data)
     GameView *view = static_cast<GameView *>(data);
     view->m_pController->backToMenu();
 }
+
+int GameView::handle(int event)
+{
+    if (event == FL_KEYDOWN)
+    {
+        m_pController->handleKeyPress(Fl::event_key());
+        return 1;
+    }
+    return Fl_Window::handle(event);
+}
