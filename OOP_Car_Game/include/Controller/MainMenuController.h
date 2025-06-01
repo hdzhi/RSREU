@@ -21,4 +21,4 @@ public:
     void exitGame() const;
 };
 
-#endif // MAIN_MENU_CONTROLLER_H
+#endif
