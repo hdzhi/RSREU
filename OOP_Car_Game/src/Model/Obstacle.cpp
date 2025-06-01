@@ -1,11 +1,14 @@
 #include "Model/Obstacle.h"
-#include "Model/Car.h" // Добавляем include для класса Car
+#include "Model/Car.h"
+#include "Model/Obstacle.h"
 
-Obstacle::Obstacle(int lane, int screenHeight)
-    : m_lane(lane), m_speed(5 + rand() % 5), m_width(40), m_height(60),
+const int LANE_WIDTH = 200;
+
+Obstacle::Obstacle(int lane, int screenWidth)
+    : m_lane(lane), m_speed(5 + rand() % 5), m_width(60), m_height(80),
       m_color(static_cast<Fl_Color>(rand() % 256))
 {
-    m_positionX = 150 + lane * 100; // Центр полосы
+    m_positionX = (screenWidth - LANE_WIDTH * 3) / 2 + lane * LANE_WIDTH + (LANE_WIDTH - m_width) / 2;
     m_positionY = -m_height;
 }
 
@@ -29,8 +32,8 @@ bool Obstacle::checkCollision(const Car &car) const
     int carTop = car.getPositionY();
     int carBottom = carTop + car.getHeight();
 
-    int obstacleLeft = m_positionX - m_width / 2;
-    int obstacleRight = m_positionX + m_width / 2;
+    int obstacleLeft = m_positionX;
+    int obstacleRight = m_positionX + m_width;
     int obstacleTop = m_positionY;
     int obstacleBottom = m_positionY + m_height;
 
@@ -42,7 +45,7 @@ bool Obstacle::checkCollision(const Car &car) const
 
 bool Obstacle::isOutOfScreen() const
 {
-    return m_positionY > 600; // Высота экрана
+    return m_positionY > 600;
 }
 
 int Obstacle::getPositionX() const { return m_positionX; }
