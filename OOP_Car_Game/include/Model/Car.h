@@ -27,6 +27,7 @@ public:
     int getHeight() const;
     int getCurrentLane() const;
 
+    void setCurrentLane(int lane) { m_currentLane = lane; }
     void setPositionX(int positionX);
     void setPositionY(int positionY);
 };
