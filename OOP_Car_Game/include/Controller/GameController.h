@@ -24,7 +24,7 @@ public:
     void handleKeyPress(int key);
     void drawGame() const;
 
-    GameView &getView();
+    GameView &getView() { return m_view; }
 };
 
 #endif
