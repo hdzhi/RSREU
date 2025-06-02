@@ -59,7 +59,6 @@ void GameController::timerCallback(void *data)
 
     if (controller->m_model.isGameOver())
     {
-        controller->m_view.updateHighScore(controller->m_model.getHighScore());
         controller->m_view.showGameOver();
         Fl::remove_timeout(timerCallback, data);
     }
@@ -69,9 +68,4 @@ void GameController::timerCallback(void *data)
     }
 
     controller->m_view.redraw();
-}
-
-GameView &GameController::getView()
-{
-    return m_view;
 }
