@@ -51,6 +51,7 @@ void GameModel::update()
 void GameModel::reset()
 {
     m_car = Car(m_road.getWidth() / 2 - 25, m_road.getHeight() - 100, 50, 80, FL_RED);
+    m_car.setPositionX(m_road.getWidth() / 2 - 25);
     m_obstacles.clear();
     m_score = 0;
     m_gameOver = false;
