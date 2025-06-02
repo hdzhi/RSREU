@@ -13,6 +13,12 @@ MainMenuController::MainMenuController(int width, int height, const char *title)
 void MainMenuController::showMainMenu()
 {
     m_view.show();
+    m_gameController.getView().hide();
+    if (m_aboutController.getView().shown())
+    {
+        m_aboutController.getView().hide();
+    }
+    m_gameController.getView().hideGameOver();
 }
 
 void MainMenuController::startNewGame()
