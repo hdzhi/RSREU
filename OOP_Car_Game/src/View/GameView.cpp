@@ -8,10 +8,12 @@ GameView::GameView(int width, int height, const char *title, GameController *con
 {
     begin();
 
-    m_pScoreBox = new Fl_Box(10, 10, 200, 30, "Score: 0");
+    m_pScoreBox = new Fl_Box(20, 20, 200, 40, "SCORE: 0");
+    m_pScoreBox->box(FL_FLAT_BOX);
     m_pScoreBox->labelfont(FL_BOLD);
-    m_pScoreBox->labelsize(18);
+    m_pScoreBox->labelsize(24);
     m_pScoreBox->labelcolor(FL_WHITE);
+    m_pScoreBox->align(FL_ALIGN_LEFT | FL_ALIGN_INSIDE);
 
     m_pHighScoreBox = new Fl_Box(width - 210, 10, 200, 30, "High Score: 0");
     m_pHighScoreBox->labelfont(FL_BOLD);
@@ -56,6 +58,33 @@ void GameView::updateHighScore(int highScore)
 
 void GameView::showGameOver()
 {
+    // Надпись GAME OVER
+    m_pGameOverBox->resize(this->w() / 2 - 150, this->h() / 2 - 80, 300, 60);
+    m_pGameOverBox->copy_label("GAME OVER");
+    m_pGameOverBox->labelfont(FL_BOLD);
+    m_pGameOverBox->labelsize(48);
+    m_pGameOverBox->labelcolor(FL_RED);
+    m_pGameOverBox->align(FL_ALIGN_CENTER);
+
+    // Отображаем финальный счет
+    Fl_Box *finalScore = new Fl_Box(this->w() / 2 - 150, this->h() / 2 - 20, 300, 40);
+    std::stringstream ss;
+    ss << "FINAL SCORE: " << m_pScoreBox->label();
+    finalScore->copy_label(ss.str().c_str());
+    finalScore->labelfont(FL_BOLD);
+    finalScore->labelsize(24);
+    finalScore->labelcolor(FL_WHITE);
+    finalScore->align(FL_ALIGN_CENTER);
+    finalScore->show();
+
+    // Кнопка возврата в меню
+    m_pBackButton->resize(this->w() / 2 - 75, this->h() / 2 + 40, 150, 40);
+    m_pBackButton->copy_label("MAIN MENU");
+    m_pBackButton->color(FL_DARK_BLUE);
+    m_pBackButton->labelfont(FL_BOLD);
+    m_pBackButton->labelsize(18);
+    m_pBackButton->labelcolor(FL_WHITE);
+
     m_pGameOverBox->show();
     m_pBackButton->show();
     redraw();
