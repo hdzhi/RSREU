@@ -25,6 +25,7 @@ public:
     void updateHighScore(int highScore);
     void showGameOver();
     void hideGameOver();
+    void showFinalScore(int score);
 
     static void backToMenuCallback(Fl_Widget *widget, void *data);
     int handle(int event) override;
