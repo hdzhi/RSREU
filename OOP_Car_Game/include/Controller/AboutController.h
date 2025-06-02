@@ -16,6 +16,7 @@ public:
 
     void showAbout();
     void backToMenu();
+    AboutView &getView() { return m_view; }
 };
 
 #endif // ABOUT_CONTROLLER_H
