@@ -1,17 +1,19 @@
-#include "Controller/AboutController.h"
-#include "Controller/MainMenuController.h"
+#include "AboutController.h"
+#include "MainController.h"
 
-AboutController::AboutController(int width, int height, MainMenuController *mainMenuController)
-    : m_view(width, height, "Racing Game - About", this),
-      m_pMainMenuController(mainMenuController) {}
-
-void AboutController::showAbout()
+AboutController::AboutController(MainController *mainController)
+    : m_mainController{mainController},
+      m_aboutView{std::make_shared<AboutView>(810, 600)}
 {
-    m_view.show();
+    m_aboutView->setBackCallback(std::bind(&AboutController::backCallback, this));
 }
 
-void AboutController::backToMenu()
+std::shared_ptr<AboutView> AboutController::getAboutView() const
 {
-    m_view.hide();
-    m_pMainMenuController->showMainMenu();
+    return m_aboutView;
+}
+
+void AboutController::backCallback()
+{
+    m_mainController->changeState(GameState::MENU);
 }

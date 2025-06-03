@@ -1,71 +1,57 @@
-#include "Controller/GameController.h"
-#include "Controller/MainMenuController.h"
-#include <FL/Fl.H>
-#include <FL/Fl_Window.H>
-#include <FL/fl_draw.H>
+#include "GameController.h"
+#include "MainController.h"
 
-GameController::GameController(int width, int height, MainMenuController *mainMenuController)
-    : m_model(width, height),
-      m_view(width, height, "Racing Game - Play Mode", this),
-      m_pMainMenuController(mainMenuController) {}
+#include <iostream>
 
-void GameController::startGame()
+GameController::GameController(std::shared_ptr<GameModel> model, MainController *mainController)
+    : m_mainController{mainController},
+      m_gameModel{model},
+      m_gameView{std::make_shared<GameView>(810, 600, m_gameModel)}
 {
-    m_model.reset();
-    m_view.show();
-    m_view.hideGameOver();
-    Fl::add_timeout(0.016, timerCallback, this);
+    m_gameView->setCallback(std::bind(&GameController::eventCallback, this, std::placeholders::_1));
+
+    m_gameModel->setCallback(std::bind(&GameController::gameOverCallback, this));
 }
 
-void GameController::backToMenu()
+std::shared_ptr<GameModel> GameController::getGameModel() const
 {
-    m_view.hide();
-    m_pMainMenuController->showMainMenu();
-    Fl::remove_timeout(timerCallback, this);
+    return m_gameModel;
 }
 
-void GameController::handleKeyPress(int key)
+std::shared_ptr<GameView> GameController::getGameView() const
 {
-    switch (key)
+    return m_gameView;
+}
+
+bool GameController::eventCallback(int event)
+{
+    int key = Fl::event_key();
+
+    switch (event)
     {
-    case FL_Left:
-        m_model.moveCarLeft();
+    case FL_FOCUS:
+    case FL_UNFOCUS:
+        return true;
+    case FL_KEYDOWN:
+        switch (key)
+        {
+        case FL_Left:
+            m_gameModel->moveCarLeft();
+            return true;
+        case FL_Right:
+            m_gameModel->moveCarRight();
+            return true;
+        }
         break;
-    case FL_Right:
-        m_model.moveCarRight();
+
+    default:
         break;
     }
-    m_view.redraw();
+
+    return false;
 }
 
-void GameController::drawGame() const
+void GameController::gameOverCallback()
 {
-    m_model.getRoad().draw();
-
-    for (const auto &obstacle : m_model.getObstacles())
-    {
-        obstacle.draw();
-    }
-
-    m_model.getCar().draw();
-}
-
-void GameController::timerCallback(void *data)
-{
-    GameController *controller = static_cast<GameController *>(data);
-
-    controller->m_model.update();
-    controller->m_view.updateScore(controller->m_model.getScore());
-
-    if (controller->m_model.isGameOver())
-    {
-        controller->m_view.showGameOver();
-        Fl::remove_timeout(timerCallback, data);
-    }
-    else
-    {
-        Fl::repeat_timeout(0.016, timerCallback, data);
-    }
-
-    controller->m_view.redraw();
+    m_mainController->changeState(GameState::MENU);
 }

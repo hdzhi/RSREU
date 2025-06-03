@@ -1,28 +1,21 @@
-#include "Model/Obstacle.h"
-#include "Model/Car.h"
-#include "Model/Obstacle.h"
+#include "Obstacle.h"
+#include "Car.h"
+#include "Obstacle.h"
 
-const int LANE_WIDTH = 200;
-
-Obstacle::Obstacle(int lane, int screenWidth)
-    : m_lane(lane), m_speed(5 + rand() % 5), m_width(60), m_height(80),
-      m_color(static_cast<Fl_Color>(rand() % 256))
+Obstacle::Obstacle(int line, int screenWidth)
+    : m_line{line},
+      m_speed{5 + rand() % 5},
+      m_width{60},
+      m_height{80},
+      m_type{rand() % 256}
 {
-    m_positionX = (screenWidth - LANE_WIDTH * 3) / 2 + lane * LANE_WIDTH + (LANE_WIDTH - m_width) / 2;
+    m_positionX = (m_line + 0.5) * 270;
     m_positionY = -m_height;
 }
 
 void Obstacle::update()
 {
     m_positionY += m_speed;
-}
-
-void Obstacle::draw() const
-{
-    fl_color(m_color);
-    fl_rectf(m_positionX - m_width / 2, m_positionY, m_width, m_height);
-    fl_color(FL_BLACK);
-    fl_rect(m_positionX - m_width / 2, m_positionY, m_width, m_height);
 }
 
 bool Obstacle::checkCollision(const Car &car) const
@@ -52,3 +45,8 @@ int Obstacle::getPositionX() const { return m_positionX; }
 int Obstacle::getPositionY() const { return m_positionY; }
 int Obstacle::getWidth() const { return m_width; }
 int Obstacle::getHeight() const { return m_height; }
+
+void Obstacle::setPassed(bool passed) { m_passed = passed; }
+bool Obstacle::getPassed() const { return m_passed; }
+
+int Obstacle::getType() const { return m_type; }

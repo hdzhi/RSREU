@@ -1,8 +1,9 @@
 #include <FL/Fl.H>
-#include "Controller/MainMenuController.h"
+#include "Controller/MainController.h"
 
 int main(int argc, char **argv)
 {
-    MainMenuController mainMenuController(800, 600, "Racing Game");
-    return Fl::run();
+    MainController mainController;
+
+    return mainController.run();
 }
